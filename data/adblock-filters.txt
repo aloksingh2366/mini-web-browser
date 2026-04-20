@@ -1,0 +1,12 @@
+! Sample EasyList-compatible rules
+||doubleclick.net^
+||googlesyndication.com^
+||googletagmanager.com^
+||google-analytics.com^
+||adservice.google.com^
+||facebook.net^
+||scorecardresearch.com^
+||amazon-adsystem.com^
+*/ads/*
+*/banner/*
+*/tracker/*
