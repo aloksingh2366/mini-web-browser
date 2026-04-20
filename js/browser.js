@@ -1,4 +1,4 @@
-import { normalizeUrl, titleFromUrl } from './utils.js';
+import { escapeHtml, normalizeUrl, titleFromUrl } from './utils.js';
 
 export class BrowserController {
   constructor({ tabs, history, bookmarks, adblock, elements }) {
@@ -147,10 +147,13 @@ export class BrowserController {
   renderTabs() {
     const tabHtml = this.tabs.list().map(tab => {
       const active = tab.id === this.activeTab().id ? 'active' : '';
+      const safeUrl = escapeHtml(tab.currentUrl);
+      const safeTitle = escapeHtml(titleFromUrl(tab.currentUrl));
+      const safeTabId = escapeHtml(tab.id);
       return `
-        <button class="tab ${active}" data-tab-id="${tab.id}" title="${tab.currentUrl}">
-          <span class="tab-title">${titleFromUrl(tab.currentUrl)}</span>
-          <span class="tab-close" data-close-id="${tab.id}">×</span>
+        <button class="tab ${active}" data-tab-id="${safeTabId}" title="${safeUrl}">
+          <span class="tab-title">${safeTitle}</span>
+          <span class="tab-close" data-close-id="${safeTabId}">×</span>
         </button>`;
     }).join('');
 
@@ -160,8 +163,8 @@ export class BrowserController {
   renderBookmarks() {
     this.elements.bookmarksList.innerHTML = this.bookmarks.list().map(item => `
       <li class="panel-item">
-        <a class="panel-link" href="#" data-bookmark-url="${item.url}" title="${item.url}">${item.title}</a>
-        <button data-remove-bookmark="${item.url}" title="Remove">✕</button>
+        <a class="panel-link" href="#" data-bookmark-url="${escapeHtml(item.url)}" title="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>
+        <button data-remove-bookmark="${escapeHtml(item.url)}" title="Remove">✕</button>
       </li>
     `).join('');
   }
@@ -169,7 +172,7 @@ export class BrowserController {
   renderHistory() {
     this.elements.historyList.innerHTML = this.history.list().map(item => `
       <li class="panel-item">
-        <a class="panel-link" href="#" data-history-url="${item.url}" title="${item.url}">${titleFromUrl(item.url)}</a>
+        <a class="panel-link" href="#" data-history-url="${escapeHtml(item.url)}" title="${escapeHtml(item.url)}">${escapeHtml(titleFromUrl(item.url))}</a>
         <small>${new Date(item.visitedAt).toLocaleString()}</small>
       </li>
     `).join('');
@@ -182,7 +185,7 @@ export class BrowserController {
     ];
 
     const unique = [...new Set(links)].slice(0, 20);
-    this.elements.addressSuggestions.innerHTML = unique.map(url => `<option value="${url}"></option>`).join('');
+    this.elements.addressSuggestions.innerHTML = unique.map(url => `<option value="${escapeHtml(url)}"></option>`).join('');
   }
 
   renderBlockedCount() {

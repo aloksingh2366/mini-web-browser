@@ -9,6 +9,10 @@ export const STORAGE_KEYS = {
 export const DEFAULT_HOME = 'https://example.com';
 
 export function createId(prefix = 'id') {
+  if (globalThis.crypto?.randomUUID) {
+    return `${prefix}_${globalThis.crypto.randomUUID()}`;
+  }
+
   return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
@@ -53,4 +57,13 @@ export function titleFromUrl(url) {
   } catch {
     return url;
   }
+}
+
+export function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
