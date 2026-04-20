@@ -87,12 +87,16 @@ export class BrowserController {
   }
 
   back() {
-    const url = this.tabs.goBack(this.activeTab().id);
+    const tab = this.activeTab();
+    if (!tab) return;
+    const url = this.tabs.goBack(tab.id);
     if (url) this.navigate(url, { pushHistory: false });
   }
 
   forward() {
-    const url = this.tabs.goForward(this.activeTab().id);
+    const tab = this.activeTab();
+    if (!tab) return;
+    const url = this.tabs.goForward(tab.id);
     if (url) this.navigate(url, { pushHistory: false });
   }
 
