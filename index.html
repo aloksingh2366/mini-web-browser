@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Web Browser</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <header class="toolbar">
+    <div class="nav-controls">
+      <button id="backBtn" title="Back">◀</button>
+      <button id="forwardBtn" title="Forward">▶</button>
+      <button id="reloadBtn" title="Reload">⟳</button>
+      <button id="stopBtn" title="Stop">✕</button>
+    </div>
+
+    <div class="address-wrap">
+      <input id="addressBar" type="text" placeholder="Enter URL (example.com)" autocomplete="off" />
+      <datalist id="addressSuggestions"></datalist>
+      <button id="goBtn">Go</button>
+    </div>
+
+    <div class="toolbar-actions">
+      <button id="bookmarkPageBtn" title="Bookmark page">★</button>
+      <button id="toggleBookmarksBtn">Bookmarks</button>
+      <button id="toggleHistoryBtn">History</button>
+      <button id="settingsBtn">Settings</button>
+    </div>
+  </header>
+
+  <section class="tabs-bar">
+    <div id="tabsList" class="tabs-list"></div>
+    <button id="newTabBtn" class="new-tab-btn" title="New tab">＋</button>
+  </section>
+
+  <main class="app-layout">
+    <aside id="bookmarksPanel" class="side-panel hidden" aria-label="Bookmarks">
+      <div class="panel-header">
+        <h3>Bookmarks</h3>
+      </div>
+      <ul id="bookmarksList" class="panel-list"></ul>
+    </aside>
+
+    <aside id="historyPanel" class="side-panel hidden" aria-label="History">
+      <div class="panel-header">
+        <h3>History</h3>
+      </div>
+      <ul id="historyList" class="panel-list"></ul>
+    </aside>
+
+    <section class="browser-content">
+      <div id="loadingIndicator" class="loading-indicator hidden">Loading…</div>
+      <div id="errorBanner" class="error-banner hidden"></div>
+      <iframe id="webFrame" title="Web Content" referrerpolicy="no-referrer"></iframe>
+    </section>
+  </main>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" class="settings-form">
+      <h3>Settings</h3>
+      <label class="setting-row">
+        <span>Enable AdBlock</span>
+        <input type="checkbox" id="adblockToggle" />
+      </label>
+      <label class="setting-row">
+        <span>Custom Filters (one per line)</span>
+        <textarea id="customFilters" rows="8" placeholder="||ads.example.com^\n/tracker.js\n@@||allowed.example.com^"></textarea>
+      </label>
+      <p class="settings-meta">Blocked requests: <strong id="blockedCount">0</strong></p>
+      <menu>
+        <button id="saveSettingsBtn" value="default">Save</button>
+        <button value="cancel">Close</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
