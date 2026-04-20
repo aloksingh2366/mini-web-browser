@@ -145,7 +145,7 @@ export class AdBlockEngine {
     if (originalFetch) {
       targetWindow.fetch = (input, init) => {
         const requestUrl = typeof input === 'string' ? input : input?.url;
-        if (requestUrl && this.shouldBlock(requestUrl)) {
+        if (requestUrl && engine.shouldBlock(requestUrl)) {
           return Promise.reject(new Error('Blocked by AdBlock'));
         }
         return originalFetch(input, init);
