@@ -101,8 +101,10 @@ export class BrowserController {
   }
 
   reload() {
+    const tab = this.activeTab();
+    if (!tab) return;
     this.showLoading();
-    this.elements.webFrame.src = this.activeTab().currentUrl;
+    this.elements.webFrame.src = tab.currentUrl;
   }
 
   stop() {
