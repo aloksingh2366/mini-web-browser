@@ -54,7 +54,7 @@ export class TabsManager {
     this.tabs.splice(index, 1);
 
     if (this.activeTabId === tabId) {
-      const fallbackTab = this.tabs[Math.max(0, index - 1)] || this.tabs[0];
+      const fallbackTab = this.tabs[Math.max(0, index - 1)];
       this.activeTabId = fallbackTab?.id || null;
     }
 

@@ -15,7 +15,7 @@ const TRACKER_HOSTS = [
 ];
 
 function escapeRegex(value) {
-  return value.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+  return value.replace(/[|\\{}()[\]^$+*?.-]/g, '\\$&');
 }
 
 function toRegexPattern(rule) {
